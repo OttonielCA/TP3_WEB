@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de tâches</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div id="calendar"></div>
+        </div>
+        <div class="main-content">
+            <header>
+                <h1>Gestionnaire de tâches</h1>
+                <button id="menu-btn" class="menu-btn"><i class="fas fa-bars"></i></button>
+            </header>
+
+            <button id="add-task-btn">Ajouter une tâche</button>
+            
+            <div id="task-form" class="hidden">
+                <h2>Nouvelle tâche</h2>
+                <form id="new-task-form">
+                  <label for="task-name">Nom de la tâche :</label>
+                  <input type="text" id="task-name" required>
+                  <label for="task-date">Date d'échéance :</label>
+                  <input type="date" id="task-date" required>
+                  <label for="task-message">Message :</label>
+                  <textarea id="task-message" rows="3"></textarea>
+                  <button type="submit">Créer la tâche</button>
+                </form>
+              </div>
+
+            <div id="task-list"></div>
+        </div>
+    </div>
+
+    <div id="history-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Historique des tâches terminées</h2>
+            <button id="clear-history-btn" class="clear-history-btn" aria-label="Effacer l'historique">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+          <div id="completed-tasks-list">
+          </div>
+          <button id="close-history-btn">Fermer</button>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+          <h2>Confirmer la tâche terminée</h2>
+          <p>Êtes-vous sûr de vouloir marquer cette tâche comme terminée ?</p>
+          <button id="confirm-ok-btn">OK</button>
+          <button id="confirm-cancel-btn">Annuler</button>
+        </div>
+    </div>
+      
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+          <h2>Modifier la tâche</h2>
+          <form id="edit-task-form">
+            <label for="edit-task-name">Nom de la tâche :</label>
+            <input type="text" id="edit-task-name" required><br>
+            <label for="edit-task-date">Date d'échéance :</label>
+            <input type="date" id="edit-task-date" required><br>
+            <label for="edit-task-message">Message :</label>
+            <textarea id="edit-task-message" rows="3"></textarea>
+            <button type="submit">Modifier la tâche</button>
+          </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
