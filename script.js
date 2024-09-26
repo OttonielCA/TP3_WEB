@@ -1,3 +1,4 @@
+// Code principal exécuté une fois que le DOM est entièrement chargé
 document.addEventListener('DOMContentLoaded', () => {
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskForm = document.getElementById('task-form');
@@ -15,22 +16,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const editTaskForm = document.getElementById('edit-task-form');
     let activeTasks = JSON.parse(localStorage.getItem('activeTasks')) || [];
     let currentDisplayDate = new Date();
-
     let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
 
+    // Afficher ou masquer le formulaire de nouvelle tâche lorsque le bouton "Ajouter une tâche" est cliqué
     addTaskBtn.addEventListener('click', () => {
         taskForm.classList.toggle('hidden');
     });
 
+    // Afficher l'historique des tâches terminées lorsque le bouton de menu est cliqué
     menuBtn.addEventListener('click', () => {
         historyModal.style.display = 'block';
         displayCompletedTasks();
     });
 
+    // Fermer la fenêtre modale de l'historique des tâches terminées lorsque le bouton de fermeture est cliqué
     closeHistoryBtn.addEventListener('click', () => {
         historyModal.style.display = 'none';
     });
 
+    // Effacer l'historique des tâches terminées après confirmation de l'utilisateur
     clearHistoryBtn.addEventListener('click', () => {
         if (confirm('Êtes-vous sûr de vouloir effacer tout l\'historique des tâches terminées ?')) {
             completedTasks = [];
@@ -39,15 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Sauvegarder les tâches actives dans le stockage local
     function saveActiveTasks() {
         localStorage.setItem('activeTasks', JSON.stringify(activeTasks));
     }
 
+    // Charger et afficher les tâches actives depuis le stockage local
     function loadActiveTasks() {
         taskList.innerHTML = '';
         activeTasks.forEach(task => createTaskTile(task));
     }
 
+    // Vérifie si les tâches sont expirées et les déplace vers les tâches complétées
     function checkExpiredTasks() {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -72,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Soumet un nouveau formulaire de tâche, enregistre les données et les affiche dans la liste
     newTaskForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const taskName = document.getElementById('task-name').value;
@@ -104,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Crée une nouvelle tuile visuelle pour une tâche dans la liste des tâches actives
     function createTaskTile(task) {
         const tile = document.createElement('div');
         tile.className = 'task-tile';
@@ -160,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         taskList.appendChild(tile);
     }
 
+    // Met à jour les informations de la tâche et l'affiche dans la tuile correspondante
     async function updateTask(tile, updatedTask, originalTask) {
         try {
             const response = await fetch('http://gyoukou.ca/ressources/projet3.php', {
@@ -192,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Supprime une tâche active de la liste et met à jour le stockage local
     function removeActiveTask(task) {
         activeTasks = activeTasks.filter(t => 
             t.name !== task.name || 
@@ -202,12 +213,14 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSidebar();
     }
 
+    // Ajoute une tâche à la liste des tâches terminées et l'enregistre dans le localStorage
     function addToCompletedTasks(task) {
         const completionDate = new Date().toISOString();
         completedTasks.push({ ...task, completionDate });
         localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
     }
 
+    // Affiche la liste des tâches complétées au cours des 30 derniers jours
     function displayCompletedTasks() {
         completedTasksList.innerHTML = '';
         const thirtyDaysAgo = new Date();
@@ -232,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
     }
 
+    // Mettez en surbrillance le jour actuel dans la grille du calendrier
     function highlightToday(calendarGrid, today) {
         const allDays = calendarGrid.querySelectorAll('.calendar-day:not(.day-name):not(.other-month)');
         allDays.forEach((day, index) => {
@@ -243,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Crée une grille de calendrier pour le mois donné
     function createCalendar(date = new Date()) {
         const calendar = document.getElementById('calendar');
         const today = new Date(); // Stocke la date actuelle
@@ -286,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayImportantDates();
     }
     
-    
+    // Change le mois affiché dans le calendrier en fonction du delta (précédent ou suivant)
     function changeMonth(delta) {
         currentDisplayDate = new Date(currentDisplayDate.getFullYear(), currentDisplayDate.getMonth() + delta, 1);
         const minDate = new Date(2024, 0); // January 2024
@@ -300,6 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Met à jour la barre latérale pour afficher les tâches importantes du mois actuel
     function updateSidebar() {
         const sidebar = document.querySelector('.sidebar');
         
@@ -311,7 +327,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
 
     }    
-    
+
+    // Affiche les dates importantes (tâches) pour le mois en cours dans la barre latérale
     function displayImportantDates() {
         const sidebar = document.querySelector('.sidebar');
         const currentMonth = currentDisplayDate.getMonth();
@@ -345,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     
-        // Ajouter la nouvelle section à la barre latérale
         sidebar.appendChild(importantDatesSection);
     }    
 

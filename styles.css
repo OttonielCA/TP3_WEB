@@ -1,4 +1,4 @@
-/* styles.css */
+/* Définition des variables de couleur pour une gestion cohérente des couleurs */
 :root {
     --background-color: #ffffff;
     --text-color: #37352f;
@@ -9,6 +9,7 @@
     --button-hover-color: #2591ba;
 }
 
+/* Style général pour le corps de la page */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     background-color: var(--background-color);
@@ -19,12 +20,14 @@ body {
     padding: 40px 20px;
 }
 
+/* Style pour l'en-tête */
 header {
     display: flex;
     align-items: left;
     margin-bottom: 30px;
 }
 
+/* Style pour le titre principal */
 h1 {
     font-size: 40px;
     font-weight: 700;
@@ -34,10 +37,12 @@ h1 {
     left: 260px; /* Complètement à droite de la page */
 }
 
+/* Style pour le contenu principal */
 .main-content {
     padding: 20px;
 }
 
+/* Style pour les sous-titres */
 h2 {
     font-size: 24px;
     font-weight: 600;
@@ -45,6 +50,7 @@ h2 {
     margin-top: 10px;
 }
 
+/* Style général pour les boutons */
 button {
     background-color: var(--button-color);
     color: white;
@@ -56,16 +62,19 @@ button {
     transition: background-color 0.3s ease;
 }
 
+/* Style au survol des boutons */
 button:hover {
     background-color: var(--button-hover-color);
     border-radius: 3px; /* Assure que le hover a la même bordure arrondie */
 }
 
+/* Espacement spécifique pour le bouton d'ajout de tâche */
 #add-task-btn {
     margin-top: 20px;
     margin-bottom: 30px;
 }
 
+/* Style pour le formulaire d'ajout de tâche */
 #task-form {
     background-color: var(--hover-color);
     padding: 20px;
@@ -77,20 +86,24 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
 }
 
+/* Masquage du formulaire lorsqu'il est en mode 'hidden' */
 #task-form.hidden {
     display: none;
 }
 
+/* Mise en forme du formulaire de nouvelle tâche */
 #new-task-form {
     display: flex;
     flex-direction: column;
 }
 
+/* Style pour les labels dans le formulaire */
 #new-task-form label {
     margin-bottom: 5px;
     font-weight: 500;
 }
 
+/* Style pour les champs de saisie dans le formulaire */
 #new-task-form input {
     margin-bottom: 15px;
     padding: 8px;
@@ -99,6 +112,7 @@ button:hover {
     font-size: 14px;
 }
 
+/* Grille pour l'affichage des tâches */
 #task-list {
     display: flex;
     flex-wrap: wrap;
@@ -106,6 +120,7 @@ button:hover {
     justify-content: flex-start;
 }
 
+/* Style pour la zone de texte du formulaire de tâche et de modification */
 #task-form textarea,
 #edit-modal textarea {
     width: 97%;
@@ -117,10 +132,11 @@ button:hover {
     resize: vertical;
 }
 
+/* Style pour les tuiles de tâche */
 .task-tile {
-    flex: 0 0 calc(20% - 16px); /* 5 items per row, accounting for gap */
-    min-width: 200px; /* Minimum width to ensure readability */
-    max-width: 600px; /* Maximum width to prevent overly wide tiles */
+    flex: 0 0 calc(20% - 16px);
+    min-width: 200px;
+    max-width: 600px;
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: 5px;
@@ -129,10 +145,12 @@ button:hover {
     box-sizing: border-box;
 }
 
+/* Effet au survol des tuiles de tâche */
 .task-tile:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Style pour le titre des tuiles de tâche */
 .task-tile h3 {
     font-size: 18px;
     font-weight: 600;
@@ -141,16 +159,19 @@ button:hover {
     word-break: break-word;
 }
 
+/* Style pour le texte secondaire dans les tuiles de tâche */
 .task-tile p {
     color: var(--secondary-text-color);
     font-size: 14px;
     margin-bottom: 15px;
 }
 
+/* Style pour la case à cocher dans les tuiles de tâche */
 .task-tile input[type="checkbox"] {
     margin-right: 5px;
 }
 
+/* Style pour le bouton d'édition dans les tuiles de tâche */
 .task-tile .edit-task-btn {
     background-color: transparent;
     color: var(--button-color);
@@ -159,15 +180,18 @@ button:hover {
     margin-left: 10px;
 }
 
+/* Effet au survol du bouton d'édition */
 .task-tile .edit-task-btn:hover {
     text-decoration: underline;
 }
 
+/* Style pour le message d'une tâche terminée */
 .task-tile p.task-message {
     margin-top: 10px;
     font-style: italic;
 }
 
+/* Style des boutons dans les tuiles de tâche */
 .task-tile button {
     margin-top: 10px;
     padding: 5px 10px;
@@ -179,10 +203,12 @@ button:hover {
     transition: background-color 0.3s ease;
 }
 
+/* Effet au survol des boutons dans les tuiles de tâche */
 .task-tile button:hover {
     background-color: var(--button-hover-color);
 }
 
+/* Style pour le bouton du menu */
 .menu-btn {
     background: none;
     border: none;
@@ -201,6 +227,7 @@ button:hover {
     right: 30px; /* Complètement à droite de la page */
 }
 
+/* Effet au survol du bouton du menu */
 .menu-btn {
     background: none;
     border: none;
@@ -209,6 +236,7 @@ button:hover {
     color: var(--text-color);
 }
 
+/* Style général pour les modales */
 .modal {
     display: none;
     position: fixed;
@@ -221,6 +249,7 @@ button:hover {
     background-color: rgba(0,0,0,0.4);
 }
 
+/* Style pour le contenu de la modale */
 .modal-content {
     background-color: var(--background-color);
     padding: 20px;
@@ -237,10 +266,12 @@ button:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Masquage de la modale lorsqu'elle est en mode 'hidden' */
 .modal.hidden {
     display: none;
 }
 
+/* Mise en page du header de la modale */
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -253,6 +284,7 @@ button:hover {
     max-width: 400px;
 }
 
+/* Style pour les boutons de la modale de confirmation et d'édition */
 #confirm-modal button,
 #edit-modal button[type="submit"] {
     margin-top: 15px;
@@ -265,20 +297,24 @@ button:hover {
     transition: background-color 0.3s ease;
 }
 
+/* Effet au survol des boutons dans les modales */
 #confirm-modal button:hover,
 #edit-modal button[type="submit"]:hover {
     background-color: var(--button-hover-color);
 }
 
+/* Style pour le bouton d'annulation dans la modale de confirmation */
 #confirm-modal #confirm-cancel-btn {
     background-color: #ccc;
     margin-left: 10px;
 }
 
+/* Effet au survol du bouton d'annulation */
 #confirm-modal #confirm-cancel-btn:hover {
     background-color: #bbb;
 }
 
+/* Style pour le bouton d'effacement de l'historique */
 .clear-history-btn {
     background: none;
     border: none;
@@ -288,116 +324,135 @@ button:hover {
     transition: color 0.3s ease;
 }
 
+/* Effet au survol du bouton d'effacement de l'historique */
 .clear-history-btn:hover {
     color: #ff4d4d;
 }
 
+/* Liste des tâches complétées */
 #completed-tasks-list {
     margin-top: 20px;
 }
 
+/* Style spécifique pour les tuiles des tâches complétées */
 #completed-tasks-list .task-tile {
     margin-bottom: 10px;
 }
 
+/* Espacement pour le bouton de fermeture de l'historique */
 #close-history-btn {
     margin-top: 20px;
 }
 
+/* Mise en page pour la conteneur principale */
 .container {
     display: flex;
-    flex-direction: row; /* Assurez-vous que les éléments sont disposés horizontalement */
+    flex-direction: row;
 }
 
+/* Style pour la barre latérale */
 .sidebar {
-    width: 220px; /* Largeur réduite de la barre latérale */
+    width: 220px;
     padding: 10px;
     background-color: var(--hover-color);
-    height: 100vh; /* Prend toute la hauteur de la page */
-    position: fixed; /* Fixé sur la gauche de la page */
+    height: 100vh;
+    position: fixed;
     left: 0;
     top: 0;
-    overflow-y: auto; /* Permet de défiler si le contenu dépasse */
+    overflow-y: auto;
 }
 
+/* Style pour le calendrier */
 #calendar {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    font-size: 12px; /* Réduit la taille de la police */
+    font-size: 12px;
 }
 
+/* Style pour l'en-tête du calendrier */
 .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px; /* Réduit de 10px à 5px */
+    margin-bottom: 5px;
 }
 
 .calendar-header h2 {
-    font-size: 14px; /* Réduit la taille du titre du mois */
+    font-size: 14px;
     margin: 0;
 }
 
+/* Style pour les boutons du calendrier */
 .calendar-header button {
-    background-color: var(--button-color); /* Utilise la couleur de fond des boutons existants */
+    background-color: var(--button-color);
     color: white;
     border: none;
-    padding: 2px 5px; /* Ajustement de la taille du bouton */
-    font-size: 10px; /* Réduit la taille de la police à celle du texte du calendrier */
+    padding: 2px 5px;
+    font-size: 10px;
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
+/* Effet au survol des boutons du calendrier */
 .calendar-header button:hover {
-    background-color: var(--button-hover-color); /* Effet au survol du bouton */
+    background-color: var(--button-hover-color);
 }
 
+/* Grille pour les jours du calendrier */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 2px; /* Réduit de 5px à 2px */
+    gap: 2px;
 }
 
+/* Style pour chaque jour dans la grille du calendrier */
 .calendar-day {
     aspect-ratio: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 11px; /* Réduit de 14px à 11px */
+    font-size: 11px;
     border-radius: 50%;
     cursor: pointer;
-    width: 20px; /* Définit une largeur fixe */
-    height: 20px; /* Définit une hauteur fixe */
+    width: 20px;
+    height: 20px;
 }
 
+/* Effet au survol des jours du calendrier */
 .calendar-day:hover {
     background-color: var(--hover-color);
 }
 
+/* Style pour le jour actuel */
 .calendar-day.today {
     background-color: #007AFF;
     color: white;
 }
 
+/* Style pour les jours des autres mois */
 .calendar-day.other-month {
     color: var(--secondary-text-color);
 }
 
+/* Style pour les noms des jours dans le calendrier */
 .day-name {
-    font-size: 10px; /* Réduit la taille des noms de jours */
+    font-size: 10px;
     color: var(--secondary-text-color);
     font-weight: bold;
 }
 
+/* Liste des dates importantes */
 #important-dates {
     margin-top: 20px;
 }
 
+/* Style pour les titres des dates importantes */
 #important-dates h3 {
     font-size: 16px;
     margin-bottom: 10px;
 }
 
+/* Style pour les éléments de la liste des dates importantes */
 .important-date {
     font-size: 14px;
     margin-bottom: 5px;
@@ -405,16 +460,19 @@ button:hover {
     transition: color 0.3s ease;
 }
 
+/* Effet au survol des dates importantes */
 .important-date:hover {
     color: var(--button-color);
 }
 
+/* Style pour une tâche en surbrillance */
 .task-tile.highlight {
     background-color: #007AFF;
     color: white;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Animation pour l'effet de disparition d'une tâche */
 .task-tile.fade-out {
     transition: background-color 0.3s ease, color 0.3s ease;
     background-color: var(--background-color);
