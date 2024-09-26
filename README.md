@@ -6,3 +6,5 @@
 - **Gestion des tâches** :
   - Chaque tâche affiche son titre, sa date d'échéance et un bouton/case à cocher pour la terminer. Lorsqu'une tâche est terminée, elle disparaît de l'affichage, et une requête GET asynchrone est envoyée au serveur. Un message d'alerte est affiché avec la réponse du serveur.
   - Un bouton permet également de modifier la tâche (nom et/ou date d'échéance), avec envoi des modifications au serveur via une requête asynchrone.
+
+![Aperçu de l'application](./Images/Screenshot_2024-09-26_173904.png)
