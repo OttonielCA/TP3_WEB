@@ -121,8 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const response = await fetch('http://gyoukou.ca/ressources/projet3.php', {
                         method: 'GET'
                     });
-                    const data = await response.text();
-                    alert(data);
+                    /*const data = await response.text();
+                    alert(data);*/
                     removeActiveTask(task);
                     addToCompletedTasks(task);
                     tile.remove();
