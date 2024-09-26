@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editModal = document.getElementById('edit-modal');
     const editTaskForm = document.getElementById('edit-task-form');
     let activeTasks = JSON.parse(localStorage.getItem('activeTasks')) || [];
+    let currentDisplayDate = new Date();
 
     let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
 
@@ -76,9 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskName = document.getElementById('task-name').value;
         const taskDate = document.getElementById('task-date').value;
         const taskMessage = document.getElementById('task-message').value;
-
+    
         const taskData = { name: taskName, date: taskDate, message: taskMessage };
-
+    
         try {
             const response = await fetch('http://gyoukou.ca/ressources/projet3.php', {
                 method: 'POST',
@@ -87,11 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(taskData)
             });
-
+    
             if (response.ok) {
                 activeTasks.push(taskData);
                 saveActiveTasks();
                 createTaskTile(taskData);
+                updateSidebar();
                 newTaskForm.reset();
                 taskForm.classList.add('hidden');
             } else {
@@ -121,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const response = await fetch('http://gyoukou.ca/ressources/projet3.php', {
                         method: 'GET'
                     });
-                    /*const data = await response.text();
-                    alert(data);*/
+                    const data = await response.text();
+                    alert(data);
                     removeActiveTask(task);
                     addToCompletedTasks(task);
                     tile.remove();
@@ -197,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             t.message !== task.message
         );
         saveActiveTasks();
+        updateSidebar();
     }
 
     function addToCompletedTasks(task) {
@@ -229,8 +232,20 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
     }
 
+    function highlightToday(calendarGrid, today) {
+        const allDays = calendarGrid.querySelectorAll('.calendar-day:not(.day-name):not(.other-month)');
+        allDays.forEach((day, index) => {
+            if (parseInt(day.textContent) === today.getDate()) {
+                day.classList.add('today');
+            } else {
+                day.classList.remove('today');
+            }
+        });
+    }
+
     function createCalendar(date = new Date()) {
         const calendar = document.getElementById('calendar');
+        const today = new Date(); // Stocke la date actuelle
         const year = date.getFullYear();
         const month = date.getMonth();
     
@@ -257,27 +272,84 @@ document.addEventListener('DOMContentLoaded', () => {
             const dayElement = document.createElement('div');
             dayElement.classList.add('calendar-day');
             dayElement.textContent = i;
-            if (i === date.getDate()) {
-                dayElement.classList.add('today');
-            }
             calendarGrid.appendChild(dayElement);
         }
     
-        document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1, date));
-        document.getElementById('next-month').addEventListener('click', () => changeMonth(1, date));
+        // Mettez en surbrillance le jour actuel seulement si on est dans le mois et l'année actuels
+        if (year === today.getFullYear() && month === today.getMonth()) {
+            highlightToday(calendarGrid, today);
+        }
+    
+        document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));
+        document.getElementById('next-month').addEventListener('click', () => changeMonth(1));
+
+        displayImportantDates();
     }
     
-    function changeMonth(delta, date) {
-        let newDate = new Date(date.getFullYear(), date.getMonth() + delta);
+    
+    function changeMonth(delta) {
+        currentDisplayDate = new Date(currentDisplayDate.getFullYear(), currentDisplayDate.getMonth() + delta, 1);
         const minDate = new Date(2024, 0); // January 2024
         const maxDate = new Date(new Date().getFullYear() + 10, 0); // January 10 years from now
     
-        if (newDate >= minDate && newDate <= maxDate) {
-            createCalendar(newDate);
+        if (currentDisplayDate >= minDate && currentDisplayDate <= maxDate) {
+            createCalendar(currentDisplayDate);
+            updateSidebar(); // Assurez-vous que cette ligne est présente
+        } else {
+            currentDisplayDate = new Date(currentDisplayDate.getFullYear(), currentDisplayDate.getMonth() - delta, 1);
         }
     }
+
+    function updateSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        
+        // Supprimer complètement l'ancienne section des dates importantes
+        const existingImportantDates = document.getElementById('important-dates');
+        if (existingImportantDates) {
+            existingImportantDates.remove();
+        }
+        
+
+    }    
     
+    function displayImportantDates() {
+        const sidebar = document.querySelector('.sidebar');
+        const currentMonth = currentDisplayDate.getMonth();
+        const currentYear = currentDisplayDate.getFullYear();
+    
+        const importantDatesSection = document.createElement('div');
+        importantDatesSection.id = 'important-dates';
+        
+        const sectionTitle = document.createElement('h3');
+        sectionTitle.textContent = 'Dates importantes';
+        importantDatesSection.appendChild(sectionTitle);
+    
+        const currentMonthTasks = activeTasks.filter(task => {
+            const taskDate = new Date(task.date);
+            return taskDate.getMonth() === currentMonth && taskDate.getFullYear() === currentYear;
+        });
+    
+        currentMonthTasks.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+        if (currentMonthTasks.length === 0) {
+            const noTasksMessage = document.createElement('p');
+            noTasksMessage.textContent = 'Aucune tâche ce mois-ci';
+            importantDatesSection.appendChild(noTasksMessage);
+        } else {
+            currentMonthTasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.classList.add('important-date');
+                taskElement.textContent = `${new Date(task.date).getDate() + 1} - ${task.name}`;
+                taskElement.addEventListener('click', () => highlightTask(task));
+                importantDatesSection.appendChild(taskElement);
+            });
+        }
+    
+        // Ajouter la nouvelle section à la barre latérale
+        sidebar.appendChild(importantDatesSection);
+    }    
+
     createCalendar();
     loadActiveTasks();
-    
+
 });
